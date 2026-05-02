@@ -171,7 +171,6 @@ export function Camera() {
         ref={fileInputRef}
         type="file"
         accept="image/*"
-        capture="environment"
         onChange={handleFilePick}
         className="sr-only"
       />
