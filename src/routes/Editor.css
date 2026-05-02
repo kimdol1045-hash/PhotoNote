@@ -1,0 +1,343 @@
+.editor {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-app-width);
+  display: flex;
+  flex-direction: column;
+  background: #1b1f24;
+  color: #fff;
+  overflow: hidden;
+}
+
+.editor--loading,
+.editor--missing {
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  color: var(--color-text-strong);
+  gap: var(--space-4);
+}
+
+.editor__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: editor-spin 800ms linear infinite;
+}
+
+@keyframes editor-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Solid header — always visible against any image content */
+.editor__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: calc(var(--safe-top) + var(--space-2)) var(--space-3) var(--space-2);
+  background: rgba(20, 23, 28, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 5;
+}
+
+.editor__title {
+  font-size: var(--font-15);
+  font-weight: var(--weight-semibold);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.editor__header-right {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.editor__chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 36px;
+  padding: 0 var(--space-3);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-14);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.editor__chip-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.editor__chip-btn[aria-label='더보기'] {
+  width: 36px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* Override Button styles for the dark editor */
+.editor__save-btn.btn--primary:disabled {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.editor__save-btn.btn {
+  height: 36px;
+  padding: 0 var(--space-3);
+  font-size: var(--font-14);
+  gap: var(--space-1);
+}
+
+.editor__stage-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.editor__stage {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.editor__bg,
+.editor__draw {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.editor__draw {
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.editor__draw--text {
+  cursor: text;
+}
+
+.editor__draw--erase {
+  cursor: cell;
+}
+
+.editor__text-overlay {
+  position: absolute;
+  z-index: 5;
+  /* Anchor the input slightly above the click point so the cursor doesn't
+     sit on top of the user's tap. */
+  transform: translate(-2px, -2px);
+}
+
+.editor__text-input {
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid var(--color-primary);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: var(--weight-bold);
+  outline: none;
+  min-width: 100px;
+  max-width: 240px;
+  box-shadow: var(--shadow-md);
+  font-family: inherit;
+}
+
+.editor__text-input::placeholder {
+  color: var(--color-text-disabled);
+  font-weight: var(--weight-regular);
+}
+
+.editor__size-letter {
+  color: #fff;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+}
+
+.editor__zoom-pill {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-12);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(6px);
+}
+
+.editor__zoom-pill:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.editor__zoom-value {
+  letter-spacing: 0.02em;
+}
+
+.editor__toolbar {
+  background: rgba(35, 39, 46, 0.96);
+  backdrop-filter: blur(10px);
+  padding: var(--space-2) 0 calc(var(--space-2) + var(--safe-bottom));
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Soft fade hint at edges so users can tell there's more to scroll. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--space-3),
+    black calc(100% - var(--space-3)),
+    transparent 100%
+  );
+}
+
+.editor__toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.editor__toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  /* `margin: 0 auto` on a flex item centers the row when it fits, and
+     collapses to 0 when the content overflows — so scrolling reveals
+     every button on both ends. */
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+  flex-shrink: 0;
+}
+
+.editor__icon-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.78);
+  transition: background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.editor__icon-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.editor__icon-btn:disabled {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.editor__icon-btn.is-active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.editor__divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.editor__swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  transition: transform var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.editor__swatch.is-active {
+  border-color: #fff;
+  transform: scale(1.12);
+}
+
+.editor__size {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor__size.is-active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.editor__size-dot {
+  background: #fff;
+  border-radius: 50%;
+}
+
+@media (min-width: 600px) {
+  .editor__toolbar {
+    padding: var(--space-3) 0 calc(var(--space-3) + var(--safe-bottom));
+  }
+  .editor__icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .editor__swatch {
+    width: 26px;
+    height: 26px;
+  }
+  .editor__size {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.editor__sheet-desc {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-sub);
+  font-size: var(--font-15);
+  line-height: var(--line-relaxed);
+}
+
+.editor__sheet-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}

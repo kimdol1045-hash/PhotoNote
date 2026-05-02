@@ -1,0 +1,18 @@
+node_modules
+dist
+dist-ssr
+dist-types
+*.tsbuildinfo
+*.local
+.vite
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+coverage
+
+# Editor / tool state
+.claude
+.vscode
+.idea

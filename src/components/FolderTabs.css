@@ -1,0 +1,98 @@
+.ftabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--content-pad);
+  background: var(--color-bg);
+  position: sticky;
+  top: calc(var(--header-h) + var(--safe-top));
+  z-index: 5;
+}
+
+.ftabs__scroll {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 2px;
+  margin: -2px -2px;
+}
+
+.ftabs__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.ftabs__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-3);
+  background: var(--color-surface);
+  color: var(--color-text-sub);
+  font-size: var(--font-14);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  transition: background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.ftabs__chip:hover {
+  background: var(--color-surface-alt);
+}
+
+.ftabs__chip.is-active {
+  background: var(--color-text-strong);
+  color: #fff;
+}
+
+.ftabs__chip-name {
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftabs__chip-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-alt);
+  color: var(--color-text-weak);
+  font-size: var(--font-12);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftabs__chip.is-active .ftabs__chip-count {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ftabs__add,
+.ftabs__manage {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-sub);
+  flex-shrink: 0;
+}
+
+.ftabs__add:hover,
+.ftabs__manage:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-text-strong);
+}

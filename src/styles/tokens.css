@@ -1,0 +1,127 @@
+/* PhotoNote — Toss-style design tokens */
+:root {
+  /* Color — Brand */
+  --color-primary: #3182f6;
+  --color-primary-hover: #1b64da;
+  --color-primary-pressed: #1957c2;
+  --color-primary-soft: #e8f2ff;
+
+  /* Color — Neutral (Toss greyscale) */
+  --color-bg: #f2f4f6;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f9fafb;
+  --color-overlay: rgba(23, 28, 36, 0.55);
+
+  --color-text-strong: #191f28;
+  --color-text: #333d4b;
+  --color-text-sub: #4e5968;
+  --color-text-weak: #8b95a1;
+  --color-text-disabled: #b0b8c1;
+  --color-text-on-primary: #ffffff;
+
+  --color-border: #e5e8eb;
+  --color-border-strong: #d1d6db;
+  --color-divider: #f2f4f6;
+
+  /* Color — Semantic */
+  --color-success: #00c896;
+  --color-warning: #ff9500;
+  --color-danger: #f04452;
+  --color-danger-soft: #fee9eb;
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* Spacing (4-step) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Typography */
+  --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+  --font-12: 12px;
+  --font-13: 13px;
+  --font-14: 14px;
+  --font-15: 15px;
+  --font-17: 17px;
+  --font-19: 19px;
+  --font-22: 22px;
+  --font-26: 26px;
+  --font-32: 32px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --line-tight: 1.3;
+  --line-base: 1.5;
+  --line-relaxed: 1.6;
+
+  /* Shadow */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-fab: 0 6px 20px rgba(49, 130, 246, 0.35);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration: 180ms;
+  --duration-slow: 280ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --max-app-width: 480px;
+  --grid-cols: 3;
+  --grid-gap: 8px;
+  --content-pad: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --header-h: 56px;
+}
+
+/* Breakpoints: Toss-style responsive scaling. */
+@media (min-width: 600px) {
+  :root {
+    --max-app-width: 640px;
+    --grid-cols: 4;
+    --grid-gap: 10px;
+    --content-pad: 20px;
+    --header-h: 60px;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --max-app-width: 880px;
+    --grid-cols: 5;
+    --grid-gap: 12px;
+    --content-pad: 24px;
+    --header-h: 64px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --max-app-width: 1080px;
+    --grid-cols: 6;
+  }
+}

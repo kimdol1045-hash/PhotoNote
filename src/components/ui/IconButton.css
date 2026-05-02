@@ -1,0 +1,35 @@
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-strong);
+  background: transparent;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.icon-btn--md {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-btn--lg {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-btn--default:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+}
+
+.icon-btn--primary {
+  color: var(--color-primary);
+}
+
+.icon-btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-soft);
+}
+
+.icon-btn:disabled {
+  color: var(--color-text-disabled);
+}

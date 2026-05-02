@@ -1,0 +1,87 @@
+.filename-sheet__preview {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-alt);
+  margin-bottom: var(--space-4);
+}
+
+.filename-sheet__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filename-sheet__folder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  color: var(--color-text-strong);
+  font-size: var(--font-15);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+}
+
+.filename-sheet__folder-icon {
+  color: var(--color-text-weak);
+  display: inline-flex;
+}
+
+.filename-sheet__folder-label {
+  color: var(--color-text-sub);
+  font-weight: var(--weight-regular);
+}
+
+.filename-sheet__folder-name {
+  margin-left: auto;
+  font-weight: var(--weight-semibold);
+}
+
+.filename-sheet__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.filename-sheet__folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.filename-sheet__folder-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-strong);
+  font-size: var(--font-17);
+  font-weight: var(--weight-medium);
+  text-align: left;
+}
+
+.filename-sheet__folder-item:hover {
+  background: var(--color-surface-alt);
+}
+
+.filename-sheet__folder-item.is-active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-pressed);
+}
+
+.filename-sheet__folder-item > span {
+  flex: 1;
+}
+
+.filename-sheet__folder-check {
+  flex: 0 !important;
+  color: var(--color-primary);
+}

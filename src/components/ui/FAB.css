@@ -1,0 +1,40 @@
+.fab {
+  position: fixed;
+  z-index: 30;
+  bottom: calc(var(--space-6) + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-6) 0 var(--space-5);
+  height: 56px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-fab);
+  font-size: var(--font-17);
+  font-weight: var(--weight-bold);
+  transition: background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.fab:hover {
+  background: var(--color-primary-hover);
+}
+
+.fab:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+.fab__icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab__label {
+  letter-spacing: -0.02em;
+}

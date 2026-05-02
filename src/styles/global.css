@@ -1,0 +1,156 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  /* Reserve scrollbar width even when overflow:hidden flips on (e.g. when a
+     bottom sheet opens), so the layout never jitters horizontally. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-15);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.01em;
+  overscroll-behavior-y: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-pressed);
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.app-shell {
+  width: 100%;
+  max-width: var(--max-app-width);
+  min-height: 100%;
+  background: var(--color-bg);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  body {
+    background: linear-gradient(180deg, #eef1f4 0%, #f2f4f6 100%);
+  }
+  .app-shell {
+    box-shadow: 0 0 0 1px var(--color-divider);
+  }
+}
+
+/* Common button reset class for clickable rows */
+.tap {
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.tap:active {
+  transform: scale(0.985);
+}
+
+/* Hide only the bottom-anchored *floating* UI that would visually overlap
+   with a bottom sheet's primary actions. The editor toolbar / header / detail
+   bar stay visible — the sheet backdrop already dims them, and keeping them
+   visible preserves discoverability of buttons like "저장". */
+body[data-sheet-open='true'] .fab,
+body[data-sheet-open='true'] .home__action-bar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out),
+    visibility 0s linear var(--duration-fast);
+}
+
+/* Visually hidden */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
