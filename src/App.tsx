@@ -25,6 +25,7 @@ export default function App() {
     <div className="app-shell">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/folder/:folderId" element={<Home />} />
         <Route path="/camera" element={<Camera />} />
         <Route path="/photo/:id" element={<PhotoDetail />} />
         <Route path="/edit/:id" element={<Editor />} />

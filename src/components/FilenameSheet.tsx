@@ -60,7 +60,6 @@ export function FilenameSheet({ open, previewUrl, onCancel, onConfirm, saving }:
         )}
 
         <TextField
-          autoFocus
           label="파일명"
           value={name}
           onChange={(e) => setName(e.target.value)}

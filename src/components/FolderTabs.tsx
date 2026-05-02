@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/schema';
 import {
@@ -8,6 +9,7 @@ import {
 } from '@/services/folderService';
 import { ROOT_FOLDER_ID } from '@/types/models';
 import { useAppStore } from '@/stores/appStore';
+import { folderPath } from '@/utils/navigation';
 import { BottomSheet } from './ui/BottomSheet';
 import { TextField } from './ui/TextField';
 import { Button } from './ui/Button';
@@ -18,9 +20,15 @@ import { FolderChip } from './FolderChip';
 import './FolderTabs.css';
 
 export function FolderTabs() {
+  const navigate = useNavigate();
   const projectId = useAppStore((s) => s.currentProjectId);
   const folderId = useAppStore((s) => s.currentFolderId);
   const switchFolder = useAppStore((s) => s.switchFolder);
+
+  function goFolder(id: string) {
+    switchFolder(id);
+    navigate(folderPath(id), { replace: true });
+  }
 
   const folders =
     useLiveQuery(
@@ -55,7 +63,7 @@ export function FolderTabs() {
     const f = await createFolder(newName, projectId);
     setNewName('');
     setCreating(false);
-    switchFolder(f.id);
+    goFolder(f.id);
     toast(`'${f.name}' 폴더를 만들었어요`, 'success');
   }
 
@@ -81,7 +89,7 @@ export function FolderTabs() {
     try {
       if (folderId === deleteFor) {
         const fallback = folders.find((f) => f.id !== deleteFor);
-        if (fallback) switchFolder(fallback.id);
+        if (fallback) goFolder(fallback.id);
       }
       await deleteFolder(deleteFor, { withFiles });
       setDeleteFor(null);
@@ -107,7 +115,7 @@ export function FolderTabs() {
               name={f.name}
               count={counts?.get(f.id) ?? 0}
               active={f.id === folderId}
-              onTap={() => switchFolder(f.id)}
+              onTap={() => goFolder(f.id)}
               onLongPress={() => setActionFor(f.id)}
             />
           ))}

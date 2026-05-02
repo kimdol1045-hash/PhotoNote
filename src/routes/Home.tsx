@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ROOT_FOLDER_ID } from '@/types/models';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/schema';
 import {
@@ -37,8 +38,15 @@ import './Home.css';
 
 export function Home() {
   const navigate = useNavigate();
+  const { folderId: urlFolderId } = useParams<{ folderId: string }>();
   const projectId = useAppStore((s) => s.currentProjectId);
   const folderId = useAppStore((s) => s.currentFolderId);
+  const switchFolder = useAppStore((s) => s.switchFolder);
+
+  useEffect(() => {
+    const target = urlFolderId ?? ROOT_FOLDER_ID;
+    if (target !== folderId) switchFolder(target);
+  }, [urlFolderId, folderId, switchFolder]);
 
   const files = useLiveQuery(
     () =>

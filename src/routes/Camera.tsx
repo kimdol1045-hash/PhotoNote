@@ -7,15 +7,21 @@ import { IconClose, IconRotate, IconImage } from '@/components/ui/Icon';
 import { FilenameSheet } from '@/components/FilenameSheet';
 import { createOriginal } from '@/services/fileService';
 import { useObjectURL } from '@/hooks/useObjectURL';
+import { useAppStore } from '@/stores/appStore';
+import { folderPath, smartBack } from '@/utils/navigation';
 import './Camera.css';
 
 type Facing = 'environment' | 'user';
 
 export function Camera() {
   const navigate = useNavigate();
+  const currentFolderId = useAppStore((s) => s.currentFolderId);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  const closeFallback = folderPath(currentFolderId);
+  const close = () => smartBack(navigate, closeFallback);
 
   const [facing, setFacing] = useState<Facing>('environment');
   const [error, setError] = useState<string | null>(null);
@@ -108,7 +114,7 @@ export function Camera() {
         ext: 'jpg',
         folderId,
       });
-      navigate('/');
+      navigate(folderPath(folderId), { replace: true });
     } catch (err) {
       console.error(err);
       setSaving(false);
@@ -125,7 +131,7 @@ export function Camera() {
       <Header
         variant="transparent"
         leading={
-          <IconButton label="닫기" onClick={() => navigate('/')}>
+          <IconButton label="닫기" onClick={close}>
             <IconClose size={26} />
           </IconButton>
         }

@@ -25,6 +25,7 @@ import {
   IconCheck,
 } from '@/components/ui/Icon';
 import { moveFile } from '@/services/fileService';
+import { folderPath, smartBack } from '@/utils/navigation';
 import './PhotoDetail.css';
 
 export function PhotoDetail() {
@@ -48,12 +49,15 @@ export function PhotoDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  const backFallback = file ? folderPath(file.folderId) : '/';
+  const goBack = () => smartBack(navigate, backFallback);
+
   if (file === undefined) {
     return (
       <>
         <Header
           leading={
-            <IconButton label="뒤로" onClick={() => navigate(-1)}>
+            <IconButton label="뒤로" onClick={goBack}>
               <IconChevronLeft />
             </IconButton>
           }
@@ -70,7 +74,7 @@ export function PhotoDetail() {
       <>
         <Header
           leading={
-            <IconButton label="뒤로" onClick={() => navigate('/')}>
+            <IconButton label="뒤로" onClick={goBack}>
               <IconChevronLeft />
             </IconButton>
           }
@@ -90,9 +94,10 @@ export function PhotoDetail() {
     if (!file) return;
     setBusy(true);
     try {
+      const fallback = folderPath(file.folderId);
       await deleteFile(file.id, { cascade });
       toast('삭제했어요', 'success');
-      navigate('/');
+      navigate(fallback, { replace: true });
     } finally {
       setBusy(false);
     }
@@ -121,7 +126,7 @@ export function PhotoDetail() {
       <Header
         title={fileFullName(file)}
         leading={
-          <IconButton label="뒤로" onClick={() => navigate('/')}>
+          <IconButton label="뒤로" onClick={goBack}>
             <IconChevronLeft />
           </IconButton>
         }
@@ -199,7 +204,7 @@ export function PhotoDetail() {
                   isOriginal={v.isOriginal}
                   isCurrent={v.id === file.id}
                   createdAt={v.createdAt}
-                  onClick={() => navigate(`/photo/${v.id}`)}
+                  onClick={() => navigate(`/photo/${v.id}`, { replace: true })}
                 />
               ))}
             </ul>

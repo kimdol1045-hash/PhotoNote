@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/schema';
 import { DEFAULT_PROJECT_ID, PROJECT_COLORS } from '@/types/models';
@@ -9,6 +10,7 @@ import {
   renameProject,
 } from '@/services/projectService';
 import { useAppStore } from '@/stores/appStore';
+import { folderPath } from '@/utils/navigation';
 import { BottomSheet } from './ui/BottomSheet';
 import { Button } from './ui/Button';
 import { TextField } from './ui/TextField';
@@ -25,8 +27,15 @@ import {
 import './ProjectPicker.css';
 
 export function ProjectPicker() {
+  const navigate = useNavigate();
   const currentProjectId = useAppStore((s) => s.currentProjectId);
   const switchProject = useAppStore((s) => s.switchProject);
+
+  async function goProject(id: string) {
+    await switchProject(id);
+    const fallback = useAppStore.getState().currentFolderId;
+    navigate(folderPath(fallback), { replace: true });
+  }
 
   const projects =
     useLiveQuery(() => db.projects.orderBy('createdAt').toArray(), []) ?? [];
@@ -61,7 +70,7 @@ export function ProjectPicker() {
     setNewColor(PROJECT_COLORS[0]);
     setCreating(false);
     setOpen(false);
-    await switchProject(p.id);
+    await goProject(p.id);
     toast(`'${p.name}' 프로젝트를 만들었어요`, 'success');
   }
 
@@ -88,7 +97,7 @@ export function ProjectPicker() {
       const wasCurrent = currentProjectId === deleteFor;
       await deleteProject(deleteFor, { cascade });
       setDeleteFor(null);
-      if (wasCurrent) await switchProject(DEFAULT_PROJECT_ID);
+      if (wasCurrent) await goProject(DEFAULT_PROJECT_ID);
       toast(cascade ? '프로젝트와 사진을 삭제했어요' : '프로젝트를 삭제했어요', 'success');
     } finally {
       setBusy(false);
@@ -123,7 +132,7 @@ export function ProjectPicker() {
                   type="button"
                   className={`proj-list__item tap ${active ? 'is-active' : ''}`}
                   onClick={async () => {
-                    await switchProject(p.id);
+                    await goProject(p.id);
                     setOpen(false);
                   }}
                 >
